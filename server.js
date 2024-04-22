@@ -1,7 +1,17 @@
-const express = require('express');
-const app = express();
+const express = require("express");
+const mongoose = require("mongoose");
+const { mongoUri } = require("./config");
 
+const app = express();
 const PORT = 3000;
 
-app.get('/',(req,res)=> res.send("Hello Word MEVN"));
-app.listen(PORT, ()=>console.log(`Aplikasi Berjalan Pada Port ${PORT}`));
+mongoose.connect(mongoUri).then(() => {
+    console.log(`Database terhubung di ${mongoUri}`);
+    app.listen(PORT, () => {
+        console.log(`Aplikasi berjalan pada port ${PORT}`);
+    });
+    }).catch((err) => {
+        console.error(`Kesalahan koneksi ke database: ${err}`);
+    });
+    
+app.get('/', (req, res) => res.send("Hello Word MEVN"));
