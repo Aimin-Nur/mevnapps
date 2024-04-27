@@ -1,17 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h3>Keagiatan Saya</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <form action="">
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul>
+      <li class="list-group-item" v-for="(item, i) in items" :key="item._id">
+        {{i+1}}.{{item.description}}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import axios from "axios";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      items: [],
+    };
+  },
+  async mounted(){
+    const response = await axios.get("/api/todolistitems");
+    this.items = response.data;
+
+  },
+};
 </script>
 
 <style>
