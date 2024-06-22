@@ -19,13 +19,13 @@
       <ul>
       <li class="list-group-item" v-for="(item, i) in items" :key="item._id">
         <form action="" v-if="isSelected(item)">
-          <input type="text" v-model="editDescription">
+          <input type="text" v-model="editDescription" id="editDescription" name="editDescription"/>
         </form>
         <span v-else>
           {{i+1}}.{{item.description}}
         </span>
-        <button class="btn btn-danger end-0" type="button" @click="isSelected(item) ? updateItem(item, i ) : removeItem(item,i)">{{isSelected(item) ? "Save" : "Delete"}}</button>
-        <button class="btn btn-info end-0" type="button" @click="isSelected(item) ? unselect(item, i ) : select(item)">{{isSelected(item) ? "Cancel" : "Edit"}}</button>
+        <button class="btn btn-danger ms-5" type="button" @click="isSelected(item) ? updateItem(item, i ) : removeItem(item,i)">{{isSelected(item) ? "Save" : "Delete"}}</button>
+        <button class="btn btn-info ms-2" type="button" @click="isSelected(item) ? unselect(item, i ) : select(item)">{{isSelected(item) ? "Cancel" : "Edit"}}</button>
       </li>
     </ul>
     </div>
@@ -64,15 +64,15 @@ export default {
       this.editDescription = item.description;
     },
     isSelected(item) {
-      return item._id === this.selected._id ;
+      return item._id === this.selected._id;
     },
     unselect() {
       this.selected = {};
       this.editDescription = "";
     },
-    async updateItem(item,i){
+    async updateItem(item, i){
       const response = await axios.put("/api/todolistitems/" + item._id, {
-        description: this.description,
+        description: this.editDescription,
       });
       this.items[i] = response.data;
       this.unselect();
